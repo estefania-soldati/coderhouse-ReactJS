@@ -1,10 +1,16 @@
 /* general */
-
 .container{max-width: 1200px;margin: auto;}
 
 /* main-menu */
-
 .main-menu{background-color: #000;padding: 1em 0;}
 .main-menu ul{display: flex; justify-content: space-between;margin: 0;}
 .main-menu ul li{list-style: none;color: #fff;cursor: pointer;}
 .main-menu ul li:hover{text-decoration: underline;}
+.main-menu ul li a,
+.main-menu ul li a:hover{color: #fff;}
+.main-menu .cart{padding:0;background: none;border: none;}
+.main-menu .cart path{fill: #fff;}
+
+/* home */
+#home .alert-info{padding: 2em 0;max-width: 400px;margin: 2em auto 0;}
+#home .alert-info p{margin-bottom: 0;}
