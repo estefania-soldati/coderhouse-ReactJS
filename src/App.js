@@ -7,6 +7,7 @@ import Home from './components/Home';
 import ItemCount from './components/ItemCount';
 import ItemList from './components/ItemList';
 import Item from './components/Item';
+import ItemDetailContainer from './components/ItemDetailContainer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -27,7 +28,7 @@ function App(){
     const serverResponse = new Promise(resolve => {
       setTimeout(() => {
         const DBProducts = [
-	        {name:"T-Shit", price:20, size:'XL'},
+	        {name:"T-Shirt", price:20, size:'XL'},
 	        {name:"Short", price:25, size:'40'},
 	        {name:"Sneakers", price:60, size:'9'},
 	        {name:"Hat", price:15, size:'M'}];
@@ -51,11 +52,7 @@ function App(){
 			<div id="home">
 				<div class="container">
 					<Home greeting="Welcome to my e-commerce" />
-					<ItemList products={products}>
-						<Item products={products}>
-							<ItemCount initial={1} min={1} max={10} onAdd={addToCart} />
-						</Item>
-					</ItemList>
+					<ItemDetailContainer />
 				</div>
 			</div>
     </>
