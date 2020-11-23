@@ -16,6 +16,8 @@ const ItemCount = ({initial,min,max,onAdd,buttonLabel}) => {
   	}
   };
 
+  console.log("after useState " + contador);
+
 	return(
 		<>  
 	    <div class="quantity-box">
@@ -25,7 +27,7 @@ const ItemCount = ({initial,min,max,onAdd,buttonLabel}) => {
 				{/*es lo mismo llamar la funcion asi cuando no tiene parametros*/}
 			  <button class="plus" aria-label="Decrease the quantity" onClick={addItem}>+</button>
 			</div>
-			<button class="btn btn-primary" onClick={()=>{onAdd(contador)}}>{buttonLabel}</button>
+			<button class="btn btn-primary btn-v1 add-to-cart animated" onClick={()=>{onAdd(contador)}}>{buttonLabel}</button>
 	  </>
 	)
 
