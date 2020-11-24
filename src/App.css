@@ -28,6 +28,10 @@ h1{font-size: 2em;}
 .btn.btn-v1:hover{background-color: #fff;color: #000;}
 .underline{text-decoration: underline;}
 
+/* loader */
+.loader-container{margin-top: 2em;width: 100%;}
+.loading-gif{width: 50px;}
+
 /* main-menu */
 .main-menu{background-color: #000;padding: 1em 0;}
 .main-menu ul{display: flex; justify-content: space-between;margin: 0;}
@@ -44,11 +48,10 @@ h1{font-size: 2em;}
 #home .alert-info p{margin-bottom: 0;}
 
 /* products grid */
-.loader-container{margin-top: 2em;width: 100%;}
-.loading-gif{width: 50px;}
 .products-grid{margin-top: 2em;}
 
 /* product item */
+.product-item {margin-bottom: 2em;}
 .product-item .image-container{padding-top: 100%;margin-bottom: 1em;}
 .product-item h3{font-size: 1.3em;}
 .product-item .quantity-box{margin: 1em 0;}

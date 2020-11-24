@@ -24,10 +24,10 @@ const ProductDetail = ({products}) => {
 				<div id="product-detail-page">
 					<div class="container">
 						<div class="row product">
-							<div class="col image-container">
+							<div class="col-12 col-sm-6 image-container">
 								<div class="image-bg bg-cover-center" style={{ backgroundImage: `url(${currentProd.image})`}}></div>
 							</div>
-							<div class="col product-info-container">
+							<div class="col-12 col-sm-6 product-info-container">
 								<h1>{currentProd.name}</h1>
 								<p class="variant">Size: {currentProd.size}</p>
 								<p class="price">${currentProd.price}</p>

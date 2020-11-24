@@ -1,31 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import ItemCount from './ItemCount';
+import Loader from './Loader';
 
-const Item = ({products,children}) => {
-  if(products){
-	  const list = products.map((prod, index) => {
-	  	let backgroundImage = prod.image;
+const Item = ({product}) => {
+
+	const [itemsCount, updateItemsCount] = useState(1);
+
+	function qtyBoxUpdate(val){
+		updateItemsCount(val);
+	}
+
+  if(product){
+	  	let backgroundImage = product.image;
 	    return (<>
-	    	<div class="product-item col text-center" >
+	    	<div class="product-item col-lg-3 col-md-4 col-sm-6 col-12 text-center" >
 				  <div class="product-info">
 				  	<div class="image-container bg-cover-center" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
-				    <h3>{prod.name}</h3>
-				    <div class="price">${prod.price}</div>
+				    <h3>{product.name}</h3>
+				    <div class="price">${product.price}</div>
 				    <div class="flex buttons-container">
-					    {children}
-					    <Link to={`/product/${prod.id}`} class="view-more">View More</Link>
+					    <ItemCount initial={1} min={1} max={10} onUpdate={qtyBoxUpdate} />
+					    <button class="btn btn-primary btn-v1 add-to-cart animated" onClick={()=>{console.log('add to cart!')}}>Comprar {itemsCount}</button>
+					    <Link to={`/product/${product.id}`} class="view-more">View More</Link>
 				    </div>
 				  </div>
 				</div>
-	    </>)
-	  })
-  return list;
+   	 </>)
   }else{
   	return(
   		<>
-  			<div class="loader-container text-center">
-    	  	<img src='loading.gif' alt='loading' class='loading-gif'></img>;
-      	</div>
+  			<Loader></Loader>
   		</>	
 		)
   }

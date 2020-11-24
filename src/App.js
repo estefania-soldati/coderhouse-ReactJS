@@ -6,9 +6,7 @@ import logo from './logo.svg';
 import Menu from './components/Menu';
 import MenuItem from './components/MenuItem';
 import CartIcon from './components/CartIcon';
-import ItemCount from './components/ItemCount';
 import ItemList from './components/ItemList';
-import Item from './components/Item';
 import Home from './screens/home';
 import ProductDetail from './screens/product';
 import Cart from './screens/cart';
@@ -65,6 +63,22 @@ function App(){
             size:'M',
             description:"Soft knit. Combines with everything.",
             "image":"https://images.asos-media.com/products/hunter-original-logo-beanie-in-black-and-red/21380773-1-black?$n_480w$&wid=476&fit=constrain"
+          },
+          {
+            id: 1114,
+            name:"Jeans",
+            price:50,
+            size:'W33 L30',
+            description:"Stretch denim Jack & Jones partners with the Better Cotton Initiative to improve cotton farming globally This makes it better for farmers and the environment BCI provides farming-practice training It promotes things like water efficiency and reducing the most harmful chemicals",
+            "image":"https://images.asos-media.com/products/jack-jones-intelligence-skinny-fit-stretch-jeans-in-mid-blue/13586448-1-bluedenim?$n_960w$&wid=952&fit=constrain"
+          },
+          {
+            id: 1115,
+            name:"Leather Jacket",
+            price:15,
+            size:'XL',
+            description:"Smooth leather. Matte finish",
+            "image":"https://images.asos-media.com/products/asos-design-leather-racer-jacket-in-brown/21187196-1-brown?$n_960w$&wid=952&fit=constrain"
           }
         ];
         resolve(DBProducts);
