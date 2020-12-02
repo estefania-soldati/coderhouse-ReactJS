@@ -7,7 +7,9 @@ const ItemCount = ({initial,min,max,onUpdate}) => {
   const removeItem = () => {
   	if (contador > min) {
   		let newValue = contador-1;
-  		onUpdate(newValue);
+      if (onUpdate) {
+  		  onUpdate(newValue);
+      }
     	setContador(newValue);
   	}
   };
@@ -15,7 +17,9 @@ const ItemCount = ({initial,min,max,onUpdate}) => {
   const addItem = () => {
   	if (contador < max) {
   		let newValue = contador+1;
-  		onUpdate(newValue);
+  		if (onUpdate) {
+        onUpdate(newValue);
+      }
     	setContador(newValue);
   	}
   };

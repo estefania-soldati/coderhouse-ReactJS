@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {Link, useParams} from 'react-router-dom';
+import ItemCount from '../../components/ItemCount';
+import { CartContext } from '../../context/CartContext';
+
 
 const ProductDetail = ({products}) => {
 
 	const {param} = useParams();
 
 	const [currentProd, setCurrentProd ] = useState({});
+
+	const CartContextData = useContext(CartContext);
 
 	useEffect(()=>{
 		if (products) {
@@ -17,6 +22,11 @@ const ProductDetail = ({products}) => {
 			}
 		}
 	}, [param]);
+
+	const addToCart = (prod) => {
+		CartContextData.addProdToCart(prod);
+		// TODO: show added to cart message
+	};
 
 	return(
 		currentProd.id ?
@@ -33,8 +43,11 @@ const ProductDetail = ({products}) => {
 								<p class="price">${currentProd.price}</p>
 								<p class="description">{currentProd.description}</p>
 								<div class="buttons-container flex">
-									<button class="btn btn-v1 btn-primary">Add To Cart</button>
-									<Link to={'/'} class="underline">
+									<div class="flex atc">
+										<ItemCount initial={1} min={1} max={10} />
+										<button class="btn btn-v1 btn-primary" onClick={()=>{addToCart(currentProd)}}>Add To Cart</button>
+									</div>
+									<Link to={'/'} class="underline back-to-home">
 										Go back to homepage
 									</Link>
 								</div>
