@@ -2,9 +2,9 @@ import React, { useEffect, useState, useContext } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import ItemCount from '../../components/ItemCount';
 import { CartContext } from '../../context/CartContext';
+import { FirebaseContext } from '../../context/FirebaseContext';
 
-
-const ProductDetail = ({products}) => {
+const ProductDetail = () => {
 
 	const {param} = useParams();
 
@@ -12,24 +12,23 @@ const ProductDetail = ({products}) => {
 
 	const CartContextData = useContext(CartContext);
 
+	const firebaseContextData = useContext(FirebaseContext);
+
 	useEffect(()=>{
-		if (products) {
-			for (var i = 0; i<products.length; i++) {
-				if(products[i].id == param){
-					setCurrentProd(products[i]);
-					break;
-				}
-			}
-		}
-	}, [param]);
+		const itemCollection = firebaseContextData.db.collection('products');
+		const idItem = itemCollection.doc(param);
+		idItem.get().then((response)=>{
+			setCurrentProd(response.data());
+	  });
+	}, [param,firebaseContextData.db]);
 
 	const addToCart = (prod) => {
 		CartContextData.addProdToCart(prod);
 		// TODO: show added to cart message
 	};
-
+	
 	return(
-		currentProd.id ?
+		currentProd.name ?
 			<>
 				<div id="product-detail-page">
 					<div class="container">
@@ -58,7 +57,9 @@ const ProductDetail = ({products}) => {
 			</>
 		:
 			<>
-	      <h1>No product selected</h1>
+	      <div class="loader-container text-center">
+	  	  	<img src='../loading.gif' alt='loading' class='loading-gif'></img>
+	    	</div>
 			</>
 	)
 

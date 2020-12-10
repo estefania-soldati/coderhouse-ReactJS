@@ -5,6 +5,7 @@ import Loader from './Loader';
 
 const Item = ({product}) => {
 
+	console.log({product});
 	const [itemsCount, updateItemsCount] = useState(1);
 
 	function qtyBoxUpdate(val){
