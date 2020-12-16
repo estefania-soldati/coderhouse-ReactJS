@@ -4,7 +4,7 @@ import Loader from './Loader';
 
   const ItemList = ({products}) => {
     if(products){
-      const list = products.map((prod, index) => {
+      const list = products.map((prod) => {
         return (<>
           <Item product={prod}></Item>
         </>)

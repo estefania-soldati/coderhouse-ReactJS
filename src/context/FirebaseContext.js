@@ -17,10 +17,12 @@ export const FirebaseProvider = ({children}) => {
     const itemCollection = db.collection('products');
 
     itemCollection.get().then((response)=>{
-      const aux = response.docs.map(element => {
-        return { id: element.id, ...element.data() };
-      });
-      setProducts(aux);
+      if (response.size) { // si hay productos
+        const aux = response.docs.map(element => {
+          return { id: element.id, ...element.data() };
+        });
+        setProducts(aux);
+      }
     });
 
   }, []);

@@ -28,7 +28,7 @@ const ProductDetail = () => {
 	};
 	
 	return(
-		currentProd.name ?
+		currentProd ?
 			<>
 				<div id="product-detail-page">
 					<div class="container">

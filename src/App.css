@@ -20,6 +20,7 @@ img,
 svg{max-width: 100%;}
 strong{font-weight: 600;}
 h1{font-size: 2em;}
+.hide{display: none;}
 .animated{-webkit-transition: 0.2s all linear;-o-transition: 0.2s all linear;transition: 0.2s all linear;}
 .container{max-width: 1200px;margin: auto;}
 .flex {display: -webkit-box !important; display: -moz-box !important; display: -ms-flexbox !important; display: -webkit-flex !important; display: flex !important;}
@@ -95,3 +96,5 @@ h1{font-size: 2em;}
 #cart-page .product-item{border-bottom: 1px solid;padding-bottom: 1em;margin: 1em 0 0;}
 #cart-page .product-item:last-child{border-bottom: none;margin-bottom: 2em;}
 #cart-page .product-item .image-container{padding-top: 40%;margin-bottom: 0;}
+#cart-page .checkout-btn{margin-top: 2em;}
+#cart-page .success-message{margin-top: 1em;}
