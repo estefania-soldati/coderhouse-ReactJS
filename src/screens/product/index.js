@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import ItemCount from '../../components/ItemCount';
 import { CartContext } from '../../context/CartContext';
 import { FirebaseContext } from '../../context/FirebaseContext';
+import $ from 'jquery';
 
 const ProductDetail = () => {
 
@@ -15,16 +16,23 @@ const ProductDetail = () => {
 	const firebaseContextData = useContext(FirebaseContext);
 
 	useEffect(()=>{
-		const itemCollection = firebaseContextData.db.collection('products');
-		const idItem = itemCollection.doc(param);
-		idItem.get().then((response)=>{
-			setCurrentProd(response.data());
-	  });
+		if (firebaseContextData.db) {
+			const itemCollection = firebaseContextData.db.collection('products');
+			const idItem = itemCollection.doc(param);
+			idItem.get().then((response)=>{
+				setCurrentProd(response.data());
+		  });
+		}
 	}, [param,firebaseContextData.db]);
 
 	const addToCart = (prod) => {
-		CartContextData.addProdToCart(prod);
-		// TODO: show added to cart message
+		let qty = parseInt($('.quantity-box input').val());
+		CartContextData.addProdToCart({...prod, quantity: qty});
+		let originalHTML = $('.add-to-cart').html();
+		$('.add-to-cart').html('Added to cart!');
+		setTimeout(function(){
+			$('.add-to-cart').html(originalHTML);
+		},1000);
 	};
 	
 	return(
@@ -44,7 +52,7 @@ const ProductDetail = () => {
 								<div class="buttons-container flex">
 									<div class="flex atc">
 										<ItemCount initial={1} min={1} max={10} />
-										<button class="btn btn-v1 btn-primary" onClick={()=>{addToCart(currentProd)}}>Add To Cart</button>
+										<button class="btn btn-v1 btn-primary add-to-cart" onClick={()=>{addToCart(currentProd)}}>Add To Cart</button>
 									</div>
 									<Link to={'/'} class="underline back-to-home">
 										Go back to homepage
@@ -57,8 +65,10 @@ const ProductDetail = () => {
 			</>
 		:
 			<>
-	      <div class="loader-container text-center">
-	  	  	<img src='../loading.gif' alt='loading' class='loading-gif'></img>
+	      <div class="no-product-found-message">
+	      	<h2>Ops!</h2>
+	  	  	<p>Looks like that product doesn't exists.</p>
+	  	  	<p><a href="/">Click Here</a> to check our latest collection.</p>
 	    	</div>
 			</>
 	)

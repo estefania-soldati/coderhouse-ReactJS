@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import {Link} from 'react-router-dom';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import { CartContext } from '../../context/CartContext';
 import CartItem from '../../components/CartItem';
 import { getFirestore } from "../../firebase";
@@ -10,9 +11,12 @@ const Cart = () => {
 	const CartContextData = useContext(CartContext);
 
 	let productsList;
+	
+	let cartTotal = 0;
 
 	if (CartContextData.cartProducts.length > 0 ) {
 		productsList = CartContextData.cartProducts.map((prod, index) => {
+			cartTotal = cartTotal + prod.quantity*prod.price;
 	    return (<>
 	      <CartItem product={prod}></CartItem>
 	    </>)
@@ -31,55 +35,15 @@ const Cart = () => {
 							{productsList}
 						</div>
 						<div class="text-center">
+							<p class="cart-total">Total: ${cartTotal}</p>
 							<Link to={'/'} class="underline continue-shopping">
 								Continue Shopping
 							</Link>
 						</div>
 						<div class="text-center">
-							<button class="btn btn-primary btn-v1 checkout-btn" onClick={()=>{
-
-						    // date
-						    let formatedDate;
-						    let date = new Date()
-								let day = date.getDate()
-								let month = date.getMonth() + 1
-								let year = date.getFullYear()
-
-								if(month < 10){
-								  formatedDate = `${day}-0${month}-${year}`;
-								}else{
-								  formatedDate = `${day}-${month}-${year}`;
-								}
-
-								// cart total
-						    let cartTotal = 0;
-						    CartContextData.cartProducts.forEach(prod=>{
-						      cartTotal = cartTotal + prod.price;
-						    });
-	
-								// order
-						    let order = {
-						      buyer: {name: "John", phone: "11-1234-5678", email: "john.doe@gmail.com" },
-						      items: CartContextData.cartProducts,
-						      date: formatedDate,
-						      total: cartTotal
-						    };
-
-						    // db 
-								const db = getFirestore();
-								
-								db.collection('orders').add(order)
-								.then(({id})=>{
-									$('.success-message span').html(id);
-									$('.success-message').fadeIn();
-								}).catch(error =>{
-									console.log('Error: '+error);
-								}).finally(e => {
-									console.log('order proccess ended')
-								});
-
-							}}>Checkout</button>
-
+							<NavLink to={'/checkout'} class="btn btn-v1 checkout-btn">
+                Checkout
+              </NavLink>
 							<div class="success-message hide">
 								<p>
 									Thank you for your purchase!

@@ -14,6 +14,7 @@ import Home from './screens/home';
 import Collection from './screens/collection';
 import ProductDetail from './screens/product';
 import Cart from './screens/cart';
+import Checkout from './screens/checkout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -35,15 +36,17 @@ function App(){
             <NavLink exact to={'/'} activeClassName="active">
               <MenuItem text="Home" />
             </NavLink>
-            <NavLink to={'/collection/women'} activeClassName="active">
-              <MenuItem text="Women" />
-            </NavLink>
-            <NavLink to={'/collection/men'} activeClassName="active">
-              <MenuItem text="Men" />
-            </NavLink>
-            <NavLink to={'/contact'} activeClassName="active">
-              <MenuItem text="Contact" />
-            </NavLink>
+            <li class="nav-item dropdown">
+              <button class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Categories</button>
+              <div class="dropdown-menu">
+                <NavLink to={'/collection/women'} activeClassName="active">
+                  Women
+                </NavLink>
+                <NavLink to={'/collection/men'} activeClassName="active">
+                  Men
+                </NavLink>
+              </div>
+            </li>
             <NavLink to={'/cart'} activeClassName="active">
               <CartIcon />
             </NavLink>
@@ -51,24 +54,27 @@ function App(){
           
           <Switch>
 
+            {/* Routes */}
             <Route exact path="/">
               <Home addToCartFunction={addToCart} />
             </Route>
 
             <Route path="/product/:param">
-              {/**/}
               <ProductDetail/>
-             
+            </Route>
+
+            <Route path="/collection/:param">
+              <Collection/>
             </Route>
 
             <Route exact path="/cart">
               <Cart />
             </Route>
 
-            <Route path="/collection/:param">
-              <Collection/>
+            <Route exact path="/checkout">
+              <Checkout />
             </Route>
-          
+
           </Switch>
 
         </FirebaseProvider>

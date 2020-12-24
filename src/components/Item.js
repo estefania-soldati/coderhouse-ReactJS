@@ -16,13 +16,19 @@ const Item = ({product, key}) => {
 	}
 
 	function addToCart(prod){
-		CartContextData.addProdToCart(prod);
+		// update button text
 		let clickedBtn = $('.add-to-cart[data-prod-id="'+prod.id+'"]');
 		let originalHTML = clickedBtn.html();
 		clickedBtn.html('Added to cart!');
 		setTimeout(function(){
 			clickedBtn.html(originalHTML);
 		},1000);
+
+		// get prod qty
+		let qty = parseInt(clickedBtn.siblings('.quantity-box').find('input').val());
+
+		// add prod to cart with its qty
+		CartContextData.addProdToCart({...prod, quantity: qty});
 	}
 
   if(product){

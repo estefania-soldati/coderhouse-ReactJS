@@ -10,7 +10,8 @@ const CartItem = ({product}) => {
 				  <div class="product-info col-8">
 				    <h3>{product.name}</h3>
 				    <p class="variant">Size: {product.size}</p>
-				    <p class="price">${product.price}</p>
+				    <p class="quantity">Qty: {product.quantity}</p>
+				    <p class="price">${product.price*product.quantity}</p>
 				  </div>
 				</div>
    	 </>)
