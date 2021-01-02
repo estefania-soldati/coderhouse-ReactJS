@@ -119,4 +119,17 @@ h1{font-size: 2em;}
 #cart-page .success-message{margin-top: 1em;}
 
 /* checkout */
+#checkout-page h1{text-align: center;width: 100%;margin-bottom: 1em;}
+
+#checkout-page .info-container{margin-bottom: 2em;}
+#checkout-page .info-container h2{margin-bottom: 1em;}
 #checkout-page .input-container{display: flex;flex-direction: column;}
+#checkout-page .input-container:not(:last-child){margin-bottom: 0.5em;}
+#checkout-page .input-container label{font-size: 0.9em;}
+
+#checkout-page .product-item:first-child{margin-top: 0;}
+#checkout-page .product-item .image-container{max-width: 20%;padding-top: 20%;}
+
+#checkout-page .checkout-btn{margin-top: 1em;}
+
+#checkout-page .success-message{margin-top: 1em;}

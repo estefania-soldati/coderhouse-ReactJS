@@ -19,6 +19,115 @@ const Checkout = () => {
 	  })
 	}
 
+	let userName;
+	let userLastName;
+	let userPhone;
+	let userEmail;
+
+	function placeOrder(){
+		// date
+    let formatedDate;
+    let date = new Date()
+		let day = date.getDate()
+		let month = date.getMonth() + 1
+		let year = date.getFullYear()
+
+		if(month < 10){
+		  formatedDate = `${day}-0${month}-${year}`;
+		}else{
+		  formatedDate = `${day}-${month}-${year}`;
+		}
+
+		// cart total
+    let cartTotal = 0;
+    CartContextData.cartProducts.forEach(prod=>{
+      cartTotal = cartTotal + prod.price;
+    });
+
+		// order
+    let order = {
+      buyer: {name: userName+" "+userLastName, phone: userPhone, email: userEmail },
+      items: CartContextData.cartProducts,
+      date: formatedDate,
+      total: cartTotal
+    };
+
+    // db 
+		const db = getFirestore();
+		
+		db.collection('orders').add(order)
+		.then(({id})=>{
+			$('.success-message .order-number').html(id);
+			$('.success-message .user-name').html(userName);
+			$('.success-message').fadeIn();
+		}).catch(error =>{
+			console.log('Error: '+error);
+		}).finally(e => {
+			console.log('order proccess ended')
+		});
+	}
+
+	function checkOrder(){
+		let infoCompleted = true;
+		let inputs = document.querySelectorAll(".info-container input");
+
+		inputs.forEach(function(input){
+			let id = input.id;
+			let value = input.value;
+			
+			// collect user's information from the inputs
+			switch (id){
+				case 'name':
+					if (value !== "") {
+						userName = value
+					}else{
+						alert('Please enter your name to continue.')
+						infoCompleted = false;
+					}
+					break				
+				case 'last-name':
+					if (value !== "") {
+						userLastName = value
+					}else{
+						alert('Please enter your last name to continue.')
+						infoCompleted = false;
+					}
+					break				
+				case 'phone':
+					if (value !== "") {
+						userPhone = value
+					}else{
+						alert('Please enter your phone number to continue.')
+						infoCompleted = false;
+					}
+					break				
+				case 'email-1':
+					if (value !== "") {
+						userEmail = value
+					}else{
+						alert('Please enter your email to continue.')
+						infoCompleted = false;
+					}
+					break
+				case 'email-2':
+					if (value !== "") {
+						if (value !== userEmail) {
+							alert('Email confirmation does not match. Please verify your email address.')
+							infoCompleted = false;
+						}
+					}else{
+						alert('Please confirm your email to continue.')
+						infoCompleted = false;
+					}
+					break
+			}
+		});
+
+		if (infoCompleted) {
+			placeOrder();
+		}
+	}
+
 	return(
 		productsList ?
 			<>
@@ -40,8 +149,8 @@ const Checkout = () => {
 										<input id="last-name" type="text"></input>
 									</div>
 									<div class="input-container">
-										<label for="name">Phone:</label>
-										<input id="name" type="tel"></input>
+										<label for="phone">Phone:</label>
+										<input id="phone" type="tel"></input>
 									</div>
 									<div class="input-container">
 										<label for="email-1">Email:</label>
@@ -63,55 +172,12 @@ const Checkout = () => {
 							</Link>
 						</div>
 						<div class="text-center">
-							<button class="btn btn-primary btn-v1 checkout-btn" onClick={()=>{
-
-						    // date
-						    let formatedDate;
-						    let date = new Date()
-								let day = date.getDate()
-								let month = date.getMonth() + 1
-								let year = date.getFullYear()
-
-								if(month < 10){
-								  formatedDate = `${day}-0${month}-${year}`;
-								}else{
-								  formatedDate = `${day}-${month}-${year}`;
-								}
-
-								// cart total
-						    let cartTotal = 0;
-						    CartContextData.cartProducts.forEach(prod=>{
-						      cartTotal = cartTotal + prod.price;
-						    });
-	
-								// order
-						    let order = {
-						      buyer: {name: "John", phone: "11-1234-5678", email: "john.doe@gmail.com" },
-						      items: CartContextData.cartProducts,
-						      date: formatedDate,
-						      total: cartTotal
-						    };
-
-						    // db 
-								const db = getFirestore();
-								
-								db.collection('orders').add(order)
-								.then(({id})=>{
-									$('.success-message span').html(id);
-									$('.success-message').fadeIn();
-								}).catch(error =>{
-									console.log('Error: '+error);
-								}).finally(e => {
-									console.log('order proccess ended')
-								});
-
-							}}>Place your order</button>
-
+							<button class="btn btn-primary btn-v1 checkout-btn" onClick={()=>{checkOrder()}}>Place your order</button>
 							<div class="success-message hide">
 								<p>
-									Thank you for your purchase!
+									Thank you for your purchase <span class="user-name"></span>!
 									<br/>
-									Order id: <span class="order-number"></span>
+									Your order id is: <span class="order-number"></span>
 								</p>
 							</div>
 						</div>
